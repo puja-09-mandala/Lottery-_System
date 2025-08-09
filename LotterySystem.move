@@ -5,16 +5,15 @@ module variable::LotterySystem {
     use aptos_framework::timestamp;
     use std::vector;
 
-    /// Struct representing a lottery pool
     struct Lottery has store, key {
-        participants: vector<address>,  // List of participants
-        ticket_price: u64,             // Price per lottery ticket
-        total_pool: u64,               // Total prize pool
-        is_active: bool,               // Whether lottery is accepting tickets
-        end_time: u64,                 // When lottery ends
+        participants: vector<address>, 
+        ticket_price: u64,          
+        total_pool: u64,               
+        is_active: bool,             
+        end_time: u64,                 
     }
 
-    /// Function to create a new lottery with ticket price and duration
+
     public fun create_lottery(
         owner: &signer, 
         ticket_price: u64, 
@@ -31,7 +30,7 @@ module variable::LotterySystem {
         move_to(owner, lottery);
     }
 
-    /// Function to buy a lottery ticket
+  
     public fun buy_ticket(
         buyer: &signer, 
         lottery_owner: address
@@ -39,15 +38,15 @@ module variable::LotterySystem {
         let buyer_addr = signer::address_of(buyer);
         let lottery = borrow_global_mut<Lottery>(lottery_owner);
         
-        // Check if lottery is still active and not expired
+      ]
         assert!(lottery.is_active, 1);
         assert!(timestamp::now_seconds() < lottery.end_time, 2);
         
-        // Transfer ticket price to lottery owner
+      
         let payment = coin::withdraw<AptosCoin>(buyer, lottery.ticket_price);
         coin::deposit<AptosCoin>(lottery_owner, payment);
         
-        // Add participant to the lottery
+        
         vector::push_back(&mut lottery.participants, buyer_addr);
         lottery.total_pool = lottery.total_pool + lottery.ticket_price;
     }
