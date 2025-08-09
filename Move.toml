@@ -1,0 +1,15 @@
+[package]
+name = "LotterySystem"
+version = "1.0.0"
+authors = []
+
+[addresses]
+variable="fbbe913356d9197fb853c91ed1432b3b2e63bf55d5ecf7991c51af6fd4c173e5"
+[dev-addresses]
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-framework.git"
+rev = "mainnet"
+subdir = "aptos-framework"
+
+[dev-dependencies]
